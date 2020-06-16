@@ -4,9 +4,9 @@ C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\Saper\bin\Debug\netcoreapp3
 C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\Saper\bin\Debug\netcoreapp3.1\Saper.runtimeconfig.dev.json
 C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\Saper\bin\Debug\netcoreapp3.1\Saper.dll
 C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\Saper\bin\Debug\netcoreapp3.1\Saper.pdb
-C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\Saper\obj\Debug\netcoreapp3.1\Saper.csproj.CoreCompileInputs.cache
 C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\Saper\obj\Debug\netcoreapp3.1\Saper.AssemblyInfoInputs.cache
 C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\Saper\obj\Debug\netcoreapp3.1\Saper.AssemblyInfo.cs
+C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\Saper\obj\Debug\netcoreapp3.1\Saper.csproj.CoreCompileInputs.cache
 C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\Saper\obj\Debug\netcoreapp3.1\Saper.dll
 C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\Saper\obj\Debug\netcoreapp3.1\Saper.pdb
 C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\Saper\obj\Debug\netcoreapp3.1\Saper.genruntimeconfig.cache

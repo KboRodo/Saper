@@ -31,23 +31,27 @@ namespace Saper
             }
 
             Minefield gameField = new Minefield(size, mines);
+            gameField.populateMinefield();
+            gameField.printMinefield();
         
             while (true)//wybieranie opcji gry
             {
-                gameField.printMinefield();
-                Console.WriteLine("Możliwe opcje:\n1-wejdź na pole 2-dodaj flagę, 3-usuń flagę, 4-koniec gry");
+                Console.WriteLine("Możliwe opcje:\n1-wejdź na pole 2-dodaj flagę, 3-usuń flagę, 4-koniec gry\n5-pokaż miny (opcja demonstracyjna), 6-ukryj miny (opcja demonstracyjna)");
+
                 option = int.Parse(Console.ReadLine());
                 switch (option)
                 {
                     case 1://wejdz na pole
+                        enterNewSpace(gameField);
+                        gameField.printMinefield();
                         break;
                     case 2://dodaj flage
-                        Console.WriteLine("WYBRANO OPCJE DODAJ FLAGE");
                         flagSetup(gameField,1);
+                        gameField.printMinefield();
                         break;
                     case 3://usub flage
-                        Console.WriteLine("WYBRANO OPCJE USUŃ FLAGE");
                         flagSetup(gameField, 0);
+                        gameField.printMinefield();
                         break;
 
                     case 4://wyjscie z gry
@@ -57,7 +61,16 @@ namespace Saper
                         Environment.Exit(0);
                         break;
 
+                    case 5://wyswietl miny
+                        gameField.printMines();
+                        break;
+
+                    case 6://ukryj miny
+                        gameField.printMinefield();
+                        break;
+
                     default:
+                        gameField.printMinefield();
                         Console.WriteLine("Nie ma takiej opcji, wybierz inną");
                         break;
                 }
@@ -73,6 +86,11 @@ namespace Saper
             while (true)
             {
                 fieldAddress = Console.ReadLine();
+                while (fieldAddress.Length > 2)
+                {
+                    Console.WriteLine("Podaj adres komórki nie używając spacji np A4");
+                    fieldAddress = Console.ReadLine();
+                }
                 x = char.ToUpper(fieldAddress[0]) - 65;
                 y = int.Parse(fieldAddress[1].ToString());
                 if (x < myMinefield.getSize() && y < myMinefield.getSize())//sprawdzanie czy podane pole istnieje na planszy
@@ -84,11 +102,6 @@ namespace Saper
                     Console.WriteLine("Takie pole nie istnieje, wybierz inne");
                 }
             }
-            while (fieldAddress.Length > 2)
-            {
-                Console.WriteLine("Podaj adres komórki nie używając spacji np A4");
-                fieldAddress = Console.ReadLine();
-            }
             
             if(flagState==1)//flagstate = 1 - postawienie flagi
             {
@@ -99,6 +112,57 @@ namespace Saper
                 myMinefield.removeFlag(x, y);
             }
         }
-        
+        static void enterNewSpace(Minefield myMinefield)//wejscie na nowe pole
+        {
+            int x, y;
+            string fieldAddress;
+            Console.WriteLine("PODAJ ADRES POLA: ");
+            while (true)
+            {
+                fieldAddress = Console.ReadLine();
+                while (fieldAddress.Length > 2)
+                {
+                    Console.WriteLine("Podaj adres komórki nie używając spacji np A4");
+                    fieldAddress = Console.ReadLine();
+                }
+                x = char.ToUpper(fieldAddress[0]) - 65;
+                y = int.Parse(fieldAddress[1].ToString());
+                if (x < myMinefield.getSize() && y < myMinefield.getSize())//sprawdzanie czy podane pole istnieje na planszy
+                {
+
+                }
+                else
+                {
+                    Console.WriteLine("Takie pole nie istnieje, wybierz inne");
+                }
+                if (myMinefield.getFlag(x, y) == false)//sprawdzenie czy na polu znajduje sie flaga
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Nie mozesz wejsc na pole oznaczone flagą, wybierz inne pole");
+                }
+            }
+            if(amIDead(myMinefield, x, y) == true)//sprawdzenie czy na polu znajduje sie mina
+            {
+                Console.WriteLine("Nie zyjesz");
+            }
+            else//nie ma miny wyswietlamy wartości 
+            {
+                myMinefield.uncoverSpace(x, y);
+            }
+        }
+        static bool amIDead(Minefield myMinefield, int x, int y)//sprawdza czy na polu jest mina
+        {
+            if (myMinefield.getMine(x,y) == true && myMinefield.getFlag(x,y) == false)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }      
     }
 }
