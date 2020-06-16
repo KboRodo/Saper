@@ -32,26 +32,23 @@ namespace Saper
             Mine = false;
             Flag = false;
         }
-        public void SetFlag()
+        public void SetFlag()//ustawianie flagi
         {
             Flag = true;
         }
-        public void RemoveFlag()
+        public void RemoveFlag()//usuwanie flagi
         {
             Flag = false;
         }
-        public void getFlag()
+        public bool getFlag()
         {
-            if(Flag==false)
-            {
-                Console.WriteLine("false");
-            }
-            else
-            {
-                Console.WriteLine("true");
-            }
+            return Flag;
         }
-        public void Print()
+        public bool getMine()
+        {
+            return Mine;
+        }
+        public void Print()//wyswietlanie pola
         {
             if (Flag == true)
             {
@@ -62,6 +59,23 @@ namespace Saper
                 Console.Write(" ");
             }
         }
+        public void printMine()
+        {
+            if (Mine == true)
+            {
+                Console.Write("*");
+            }
+            else
+            {
+                Console.Write(" ");
+            }
+        }
+
+        public void plantMine()//ustawienie miny na polu
+        {
+            Mine = true;
+        }
+
         public override string ToString()
         {
             if (Flag == true)
