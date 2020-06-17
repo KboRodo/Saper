@@ -193,7 +193,7 @@ namespace Saper
         {
             for (int diffT = y; diffT >= 0; diffT--)//w góre od (x,y)
             {
-                if (myMinefield.isDiscovered(x, diffT) == false)//metoda odkrywa pola które sie są bombami lub poprzednio odkrytymi polami graniczącymi z miną
+                if (myMinefield.isDiscovered(x, diffT) == false)//funkcja odkrywa pola które sie są bombami lub poprzednio odkrytymi polami graniczącymi z miną
                 {
                    
                     if (myMinefield.getMine(x, diffT)==false)
@@ -216,7 +216,7 @@ namespace Saper
             }
             for (int diffB = y; diffB < myMinefield.getSize(); diffB++)//w dół od (x,y)
             {
-                if (myMinefield.isDiscovered(x, diffB) == false)//metoda odkrywa pola które sie są bombami lub poprzednio odkrytymi polami graniczącymi z miną
+                if (myMinefield.isDiscovered(x, diffB) == false)//funkcja odkrywa pola które sie są bombami lub poprzednio odkrytymi polami graniczącymi z miną
                 {
                    
                     if (myMinefield.getMine(x, diffB)==false)
@@ -244,7 +244,7 @@ namespace Saper
             {
                 for (int diffL = x; diffL >= 0; diffL--)//na lewo od (x,y)
                 {
-                    if (myMinefield.isDiscovered(diffL, y) == false)//metoda odkrywa pola które sie są bombami lub poprzednio odkrytymi polami graniczącymi z miną
+                    if (myMinefield.isDiscovered(diffL, y) == false)//funkcja odkrywa pola które sie są bombami lub poprzednio odkrytymi polami graniczącymi z miną
                     {
                         if (myMinefield.getMine(diffL,y)==false)
                         {
@@ -267,7 +267,7 @@ namespace Saper
                 }
                 for (int diffR = x; diffR < myMinefield.getSize(); diffR++)//na prawo od (x,y)
                 {
-                    if (myMinefield.isDiscovered(diffR, y) == false)//metoda odkrywa pola które sie są bombami lub poprzednio odkrytymi polami graniczącymi z miną
+                    if (myMinefield.isDiscovered(diffR, y) == false)//funkcja odkrywa pola które sie są bombami lub poprzednio odkrytymi polami graniczącymi z miną
                     {
                         if (myMinefield.getMine(diffR, y) ==false)
                         {

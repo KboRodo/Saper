@@ -180,7 +180,7 @@ namespace Saper
             }
         }
 
-        public void populateMinefield()//metoda spawnujące miny w losowych polach planszy
+        public void populateMinefield()//funkcja spawnujące miny w losowych polach planszy
         {
             Random randomNumber = new Random();
             int x, y;
