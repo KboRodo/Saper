@@ -134,6 +134,11 @@ namespace Saper
             return myMinefield[x, y].getMine();
         }
 
+        public bool isDiscovered(int x, int y)
+        {
+            return myMinefield[x, y].isDiscovered();
+        }
+
         public void removeFlag(int x, int y)//usuwanie flagi z pola
         {
             myMinefield[x, y].RemoveFlag();

@@ -108,6 +108,10 @@ namespace Saper
             Discovered = true;
         }
 
+        public bool isDiscovered()
+        {
+            return Discovered;
+        }
         public int checkBorder()
         {
             return MineBorder;
