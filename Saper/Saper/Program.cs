@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -10,24 +11,32 @@ namespace Saper
         static void Main()
         {
             int size, mines, check, option;
+            Stopwatch stoper = new Stopwatch();
+            stoper.Start();
 
             Console.WriteLine("Witaj w grze Saper !");
 
             Console.WriteLine("Wybierz rozmiar planszy, maksymalny rozmiar to 10x10:");
-            size = int.Parse(Console.ReadLine());
-            while (size > 10)
+            while(int.TryParse(Console.ReadLine(),out size)==false)//sprawdzenie czy dane wprowadzone są w poprawnym formacie
             {
-                Console.WriteLine("Maksymalny rozmiar planszy to 10x10");
+                Console.WriteLine("Porszę podać prawidłowy rozmiar od 2-10");
+            }
+            while (size > 10&& size>1)//sprawdzenie czy liczba miesci sie w określonym zakresie
+            {
+                Console.WriteLine("Podaj prawidłowy rozmiar od 2-10");
                 size = int.Parse(Console.ReadLine());
             }
             Console.Clear();
 
             check = (size * size) - 1;
             Console.WriteLine($"Podaj ilość min, maksymalna ilość min to: {check}:");
-            mines = int.Parse(Console.ReadLine());
-            while (mines > check)
+            while(int.TryParse(Console.ReadLine(),out mines) == false)//sprawdzenie czy dane wprowadzone są w poprawnym formacie
             {
-                Console.WriteLine($"Liczba min nie może być większa niż {check}");
+                Console.WriteLine($"Podaj prawidłową ilość min, maksymalna ilość min to: {check} ");
+            }
+            while (mines > check)//sprawdzenie czy liczba miesci sie w określonym zakresie
+            {
+                Console.WriteLine($"Podaj prawidłową ilość min, maksymalna ilość min to: {check} ");
                 mines = int.Parse(Console.ReadLine());
             }
 
@@ -75,7 +84,13 @@ namespace Saper
                         Console.WriteLine("Nie ma takiej opcji, wybierz inną");
                         break;
                 }
-
+                if (gameField.isGameFinished() == true)//sprawdzenie czy gra się zakończyła-wszystkie miny zostały rozbrojone
+                {
+                    stoper.Stop();
+                    Console.WriteLine("\nGratulacje, udało ci się znaleźć wszyskie miny!!!");
+                    Console.WriteLine($"Twój czas to: {stoper.Elapsed.Minutes} minut i {stoper.Elapsed.Seconds} sekund");
+                    break;
+                }
             }
 
         }
@@ -87,13 +102,14 @@ namespace Saper
             while (true)
             {
                 fieldAddress = Console.ReadLine();
-                while (fieldAddress.Length > 2)
+                while (fieldAddress.Length != 2)
                 {
                     Console.WriteLine("Podaj adres komórki nie używając spacji np A4");
                     fieldAddress = Console.ReadLine();
                 }
                 x = char.ToUpper(fieldAddress[0]) - 65;
-                y = int.Parse(fieldAddress[1].ToString());
+                if(int.TryParse(fieldAddress[1].ToString(),out y)==true)
+                { }
                 if (x < myMinefield.getSize() && y < myMinefield.getSize())//sprawdzanie czy podane pole istnieje na planszy
                 {
                     break;
@@ -121,33 +137,41 @@ namespace Saper
             while (true)
             {
                 fieldAddress = Console.ReadLine();
-                while (fieldAddress.Length > 2)
+                while (fieldAddress.Length != 2)
                 {
                     Console.WriteLine("Podaj adres komórki nie używając spacji np A4");
                     fieldAddress = Console.ReadLine();
                 }
                 x = char.ToUpper(fieldAddress[0]) - 65;
-                y = int.Parse(fieldAddress[1].ToString());
-                if (x < myMinefield.getSize() && y < myMinefield.getSize())//sprawdzanie czy podane pole istnieje na planszy
+                if(int.TryParse(fieldAddress[1].ToString(), out y))//sprawdzenie
                 {
-
+                    if (x < myMinefield.getSize() && y < myMinefield.getSize())//sprawdzanie czy podane pole istnieje na planszy
+                    {
+                        if (myMinefield.getFlag(x, y) == false)//sprawdzenie czy na polu znajduje sie flaga
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Nie mozesz wejsc na pole oznaczone flagą, wybierz inne pole");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Takie pole nie istnieje, wybierz inne");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Takie pole nie istnieje, wybierz inne");
-                }
-                if (myMinefield.getFlag(x, y) == false)//sprawdzenie czy na polu znajduje sie flaga
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Nie mozesz wejsc na pole oznaczone flagą, wybierz inne pole");
+                    Console.WriteLine("Podaj poprawny adres komórki np A4");
                 }
             }
             if (amIDead(myMinefield, x, y) == true)//sprawdzenie czy na polu znajduje sie mina
             {
-                Console.WriteLine("Nie zyjesz");
+                Console.WriteLine("Wszedłeś na minę,nie zyjesz");
+                Thread.Sleep(2000);
+                Environment.Exit(0);
+
             }
             else//nie ma miny wyswietlamy wartości 
             {

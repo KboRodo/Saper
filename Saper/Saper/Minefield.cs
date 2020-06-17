@@ -11,7 +11,6 @@ namespace Saper
         private int Flags { get; set; }
 
         private int DefusedMines { get; set; }
-
         private int Size { get; set; }//roziar wybranej planszy
         private Element[,] myMinefield=new Element[10,10];
 
@@ -21,6 +20,7 @@ namespace Saper
         public Minefield(int size, int mines)//konstruktor pola
         {
             Mines = mines;
+            Flags = mines;
             Size = size;
             DefusedMines = 0;
             for(int i=0; i<size; i++)
@@ -35,6 +35,7 @@ namespace Saper
         public void printMinefield()//wyswietlanie obrazu planszy z zaznaczonymi flagami
         {
             Console.Clear();//czyszczenie ekranu
+            Console.WriteLine($"Pozostałe flagi: {Flags} \n");
 
             Console.Write("|");//wyswietlanie liter na gorze planszy
             for (int k = 0; k < Size + 1; k++)
@@ -74,7 +75,7 @@ namespace Saper
         public void printMines()//wyswietlanie obrazu planszy z zaznaczonymi minami
         {
             Console.Clear();//czyszczenie ekranu
-
+            Console.WriteLine($"Pozostałe flagi: {Flags} \n");
             Console.Write("|");//wyswietlanie liter na gorze planszy
             for (int k = 0; k < Size + 1; k++)
             {
@@ -116,12 +117,17 @@ namespace Saper
             myMinefield[x, y].uncoverSpace();
         }
         public void setFlag(int x, int y)//ustawianie flagi na polu
-        {
-            myMinefield[x, y].SetFlag();
-            if (myMinefield[x, y].getMine() == true)
+        {         
+            if (Flags > 0)
             {
-                DefusedMines++;
+                myMinefield[x, y].SetFlag();
+
+                if (myMinefield[x, y].getMine() == true)
+                {
+                    DefusedMines++;
+                }
             }
+            Flags--;
         }
 
         public bool getFlag(int x, int y)//sprawdza czy na polu jest flaga
@@ -141,10 +147,14 @@ namespace Saper
 
         public void removeFlag(int x, int y)//usuwanie flagi z pola
         {
-            myMinefield[x, y].RemoveFlag();
             if (myMinefield[x, y].getMine() == true)
             {
                 DefusedMines--;
+            }
+            if (myMinefield[x, y].getFlag() == true)
+            {
+                Flags++;
+                myMinefield[x, y].RemoveFlag();
             }
         }
 
@@ -156,6 +166,18 @@ namespace Saper
         public int checkBorder(int x, int y)
         {
             return myMinefield[x, y].checkBorder();
+        }
+
+        public bool isGameFinished()//sprawdza czy gra sie zakończyła-czy wszystkie miny zostały oznaczone
+        {
+            if (Mines == DefusedMines)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void populateMinefield()//metoda spawnujące miny w losowych polach planszy
