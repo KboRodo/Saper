@@ -1,0 +1,9 @@
+C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\MinefieldLibrary\bin\Debug\netstandard2.0\MinefieldLibrary.deps.json
+C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\MinefieldLibrary\bin\Debug\netstandard2.0\MinefieldLibrary.dll
+C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\MinefieldLibrary\bin\Debug\netstandard2.0\MinefieldLibrary.pdb
+C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\MinefieldLibrary\obj\Debug\netstandard2.0\MinefieldLibrary.csprojAssemblyReference.cache
+C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\MinefieldLibrary\obj\Debug\netstandard2.0\MinefieldLibrary.AssemblyInfoInputs.cache
+C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\MinefieldLibrary\obj\Debug\netstandard2.0\MinefieldLibrary.AssemblyInfo.cs
+C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\MinefieldLibrary\obj\Debug\netstandard2.0\MinefieldLibrary.csproj.CoreCompileInputs.cache
+C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\MinefieldLibrary\obj\Debug\netstandard2.0\MinefieldLibrary.dll
+C:\Users\qubak\OneDrive\Documents\GitHub\Saper\Saper\MinefieldLibrary\obj\Debug\netstandard2.0\MinefieldLibrary.pdb

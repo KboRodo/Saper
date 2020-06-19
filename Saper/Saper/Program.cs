@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
+using MinefieldLibrary;
 
 namespace Saper
 {
@@ -17,11 +17,11 @@ namespace Saper
             Console.WriteLine("Witaj w grze Saper !");
 
             Console.WriteLine("Wybierz rozmiar planszy, maksymalny rozmiar to 10x10:");
-            while(int.TryParse(Console.ReadLine(),out size)==false)//sprawdzenie czy dane wprowadzone są w poprawnym formacie
+            while (int.TryParse(Console.ReadLine(), out size) == false)//sprawdzenie czy dane wprowadzone są w poprawnym formacie
             {
                 Console.WriteLine("Porszę podać prawidłowy rozmiar od 2-10");
             }
-            while (size > 10&& size>1)//sprawdzenie czy liczba miesci sie w określonym zakresie
+            while (size > 10 && size > 1)//sprawdzenie czy liczba miesci sie w określonym zakresie
             {
                 Console.WriteLine("Podaj prawidłowy rozmiar od 2-10");
                 size = int.Parse(Console.ReadLine());
@@ -30,7 +30,7 @@ namespace Saper
 
             check = (size * size) - 1;
             Console.WriteLine($"Podaj ilość min, maksymalna ilość min to: {check}:");
-            while(int.TryParse(Console.ReadLine(),out mines) == false)//sprawdzenie czy dane wprowadzone są w poprawnym formacie
+            while (int.TryParse(Console.ReadLine(), out mines) == false)//sprawdzenie czy dane wprowadzone są w poprawnym formacie
             {
                 Console.WriteLine($"Podaj prawidłową ilość min, maksymalna ilość min to: {check} ");
             }
@@ -53,20 +53,18 @@ namespace Saper
                 {
                     case 1://wejdz na pole
                         enterNewSpace(gameField);
-                        gameField.printMinefield();
                         break;
                     case 2://dodaj flage
-                        flagSetup(gameField, 1);
+                        flagSetup(gameField,1);
                         gameField.printMinefield();
                         break;
                     case 3://usub flage
-                        flagSetup(gameField, 0);
+                        flagSetup(gameField,0);
                         gameField.printMinefield();
                         break;
 
                     case 4://wyjscie z gry
                         Console.WriteLine("Wychodzenie z gry...");
-                        Thread.Sleep(1000);
                         Console.Clear();
                         Environment.Exit(0);
                         break;
@@ -94,7 +92,7 @@ namespace Saper
             }
 
         }
-        static void flagSetup(Minefield myMinefield, int flagState)//zmiana statusu flagi
+        static void flagSetup(Minefield myMinefield, int flagstate)
         {
             int x, y;
             string fieldAddress;
@@ -108,25 +106,29 @@ namespace Saper
                     fieldAddress = Console.ReadLine();
                 }
                 x = char.ToUpper(fieldAddress[0]) - 65;
-                if(int.TryParse(fieldAddress[1].ToString(),out y)==true)
-                { }
-                if (x < myMinefield.getSize() && y < myMinefield.getSize())//sprawdzanie czy podane pole istnieje na planszy
+                if (int.TryParse(fieldAddress[1].ToString(), out y))//sprawdzenie
                 {
-                    break;
+                    if (x < myMinefield.getSize() && y < myMinefield.getSize())//sprawdzanie czy podane pole istnieje na planszy
+                    {
+                        if(flagstate == 1)//stawianie flagi
+                        {
+                            myMinefield.setFlag(x, y);
+                        }
+                        else//usuwanie flagi
+                        {
+                            myMinefield.removeFlag(x, y);
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Takie pole nie istnieje, wybierz inne");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Takie pole nie istnieje, wybierz inne");
+                    Console.WriteLine("Podaj poprawny adres komórki np A4");
                 }
-            }
-
-            if (flagState == 1)//flagstate = 1 - postawienie flagi
-            {
-                myMinefield.setFlag(x, y);
-            }
-            else //flagstate = 0 - usuniecie flagi;
-            {
-                myMinefield.removeFlag(x, y);
             }
         }
         static void enterNewSpace(Minefield myMinefield)//wejscie na nowe pole
@@ -149,7 +151,20 @@ namespace Saper
                     {
                         if (myMinefield.getFlag(x, y) == false)//sprawdzenie czy na polu znajduje sie flaga
                         {
-                            break;
+                            if (myMinefield.amIDead(x, y)==true)
+                            {
+                                Debug.WriteLine("Dead");
+                                Console.WriteLine("Wszedłeś na minę, nie żyjesz");
+                                Environment.Exit(0);
+                                break;  
+                            }
+                            else
+                            {
+                                myMinefield.uncoverEmptySpaces(x, y);
+                                myMinefield.printMinefield();
+                                break;
+                            }
+                           
                         }
                         else
                         {
@@ -164,128 +179,6 @@ namespace Saper
                 else
                 {
                     Console.WriteLine("Podaj poprawny adres komórki np A4");
-                }
-            }
-            if (amIDead(myMinefield, x, y) == true)//sprawdzenie czy na polu znajduje sie mina
-            {
-                Console.WriteLine("Wszedłeś na minę,nie zyjesz");
-                Thread.Sleep(2000);
-                Environment.Exit(0);
-
-            }
-            else//nie ma miny wyswietlamy wartości 
-            {
-                uncoverEmptySpaces(myMinefield, x, y);
-            }
-        }
-        static bool amIDead(Minefield myMinefield, int x, int y)//sprawdza czy na polu jest mina
-        {
-            if (myMinefield.getMine(x, y) == true && myMinefield.getFlag(x, y) == false)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        static void uncoverEmptySpaces(Minefield myMinefield, int x, int y)//odkrywa pionowy pas planszy przecinający punkt aż do znalezienia pola sąsiadującego z miną
-        {
-            for (int diffT = y; diffT >= 0; diffT--)//w góre od (x,y)
-            {
-                if (myMinefield.isDiscovered(x, diffT) == false)//funkcja odkrywa pola które sie są bombami lub poprzednio odkrytymi polami graniczącymi z miną
-                {
-                   
-                    if (myMinefield.getMine(x, diffT)==false)
-                    {
-                        if (diffT < myMinefield.getSize() - 1 && myMinefield.checkBorder(x, diffT + 1) > 0)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            myMinefield.uncoverSpace(x, diffT);
-                            uncoverRow(myMinefield, x, diffT);
-                        }
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-            for (int diffB = y; diffB < myMinefield.getSize(); diffB++)//w dół od (x,y)
-            {
-                if (myMinefield.isDiscovered(x, diffB) == false)//funkcja odkrywa pola które sie są bombami lub poprzednio odkrytymi polami graniczącymi z miną
-                {
-                   
-                    if (myMinefield.getMine(x, diffB)==false)
-                    {
-                        if (diffB > 0 && myMinefield.checkBorder(x, diffB - 1) > 0)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            myMinefield.uncoverSpace(x, diffB);
-                            uncoverRow(myMinefield, x, diffB);
-                        }
-                        
-                    }
-                    else
-                    { 
-                        break;
-                    }
-                }
-            }
-        }
-        static void uncoverRow(Minefield myMinefield, int x, int y)//odkrywa poziomy pas planszy planszy przecinający punkt aż do znalezienia pola sąsiadującego z miną
-        {
-            {
-                for (int diffL = x; diffL >= 0; diffL--)//na lewo od (x,y)
-                {
-                    if (myMinefield.isDiscovered(diffL, y) == false)//funkcja odkrywa pola które sie są bombami lub poprzednio odkrytymi polami graniczącymi z miną
-                    {
-                        if (myMinefield.getMine(diffL,y)==false)
-                        {
-                            if (diffL < myMinefield.getSize() - 1 && myMinefield.checkBorder(diffL + 1, y) > 0)
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                myMinefield.uncoverSpace(diffL, y);
-                                uncoverEmptySpaces(myMinefield, diffL, y);
-                            }
-                        }                      
-                        else
-                        {
-                            break;
-                        }
-                    }
-                   
-                }
-                for (int diffR = x; diffR < myMinefield.getSize(); diffR++)//na prawo od (x,y)
-                {
-                    if (myMinefield.isDiscovered(diffR, y) == false)//funkcja odkrywa pola które sie są bombami lub poprzednio odkrytymi polami graniczącymi z miną
-                    {
-                        if (myMinefield.getMine(diffR, y) ==false)
-                        {
-                            if (diffR > 0 && myMinefield.checkBorder(diffR - 1, y) > 0)
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                myMinefield.uncoverSpace(diffR, y);
-                                uncoverEmptySpaces(myMinefield, diffR, y);
-                            }
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
                 }
             }
         }

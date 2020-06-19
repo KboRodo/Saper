@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "MinefieldLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/MinefieldLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MinefieldLibrary.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "MinefieldLibrary/1.0.0": {
+      "type": "project",
+      "path": "../MinefieldLibrary/MinefieldLibrary.csproj",
+      "msbuildProject": "../MinefieldLibrary/MinefieldLibrary.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "MinefieldLibrary >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\qubak\\.nuget\\packages\\": {},
@@ -33,11 +52,16 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Users\\qubak\\OneDrive\\Documents\\NuGet": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\qubak\\OneDrive\\Documents\\GitHub\\Saper\\Saper\\MinefieldLibrary\\MinefieldLibrary.csproj": {
+              "projectPath": "C:\\Users\\qubak\\OneDrive\\Documents\\GitHub\\Saper\\Saper\\MinefieldLibrary\\MinefieldLibrary.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
